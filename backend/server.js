@@ -7,8 +7,10 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 // const User = require('./models/User');
 const petFinder = require('./petFinder')
-
+const Blog = require('./models/blogSchema')
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
@@ -23,9 +25,49 @@ app.use(express.static(path.join(__dirname, '..', 'dist')));
 
 // Serve the 'admin.html' file from the 'public' folder
 app.get('/', (req, res) => {
-  const adminHtmlPath = path.join(__dirname, '..', 'dist', 'index.html');
+  const indexPath = path.join(__dirname, '..', 'dist', 'index.html');
+  res.sendFile(indexPath);
+});
+
+app.get('/admin', (req, res) => {
+  const adminHtmlPath = path.join(__dirname, '..', 'dist', 'admin.html');
   res.sendFile(adminHtmlPath);
 });
+
+// Backend code
+app.get('/api/blogs', async (req, res) => {
+  try {
+    const blogs = await Blog.find({});
+    res.json(blogs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post('/submit', (req, res) => {
+  const blog = new Blog({
+    title: req.body.title,
+    date: req.body.date,
+    category: req.body.category,
+    body: req.body.body,
+    tags: req.body.tags.split(',').map(tag => tag.trim()), // Splitting the tags by comma
+    image: req.body.image,
+  });
+
+  blog.save()
+  .then(() => {
+    console.log('Blog saved successfully');
+    res.redirect('/admin'); 
+  })
+  .catch(err => {
+    console.error('An error occurred:', err);
+  });
+});
+
 
 app.get('/pets', async (req, res) => {
   try {
@@ -60,15 +102,20 @@ const isLoggedIn = (req, res, next) => {
 //   res.send('<h1>Admin Page</h1><a href="/logout">Logout</a>');
 // });
 
+// app.get('/login', (req, res) => {
+//   // res.send(`
+//   //   <h1>Login</h1>
+//   //   <form method="post" action="/login">
+//   //     <input type="text" name="username" placeholder="Username" required><br>
+//   //     <input type="password" name="password" placeholder="Password" required><br>
+//   //     <button type="submit">Login</button>
+//   //   </form>
+//   // `);
+// });
+
 app.get('/login', (req, res) => {
-  res.send(`
-    <h1>Login</h1>
-    <form method="post" action="/login">
-      <input type="text" name="username" placeholder="Username" required><br>
-      <input type="password" name="password" placeholder="Password" required><br>
-      <button type="submit">Login</button>
-    </form>
-  `);
+  const loginPath = path.join(__dirname, '..', 'dist', 'login.html');
+  res.sendFile(loginPath);
 });
 
 app.post('/login', (req, res) => {

@@ -156,3 +156,9 @@ footer {
 #property-images, .image-upload {
   padding: 15px 0;
 }
+a.adoptable-cat {
+  font-weight: 700;
+  color: #ff6547;
+  text-decoration: inherit;
+  
+}

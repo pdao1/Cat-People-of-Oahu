@@ -3,9 +3,7 @@ const app = express();
 const router = express.Router();
 const path = require('path');
 const mongoose = require('mongoose');
-// const QueueModel = require('./models/QueueModel');
 const session = require('express-session');
-// const User = require('./models/User');
 const petFinder = require('./petFinder')
 const Blog = require('./models/blogSchema')
 const bodyParser = require('body-parser');
@@ -34,6 +32,11 @@ app.get('/admin', (req, res) => {
   res.sendFile(adminHtmlPath);
 });
 
+app.get('/dashboard', (req, res) => {
+  const dashboardPath = path.join(__dirname, '..', 'dist', 'dashboard.html');
+  res.sendFile(dashboardPath);
+});
+
 // Backend code
 app.get('/api/blogs', async (req, res) => {
   try {
@@ -45,6 +48,35 @@ app.get('/api/blogs', async (req, res) => {
   }
 });
 
+app.get('/blogs/edit/:id', async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    res.render('edit', { blog }); // Assuming 'edit' is the template for the edit form
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred');
+  }
+});
+
+app.put('/blogs/:id', async (req, res) => {
+  try {
+    await Blog.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect(`/blogs/${req.params.id}`); // Redirecting to the updated blog post
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while updating the blog');
+  }
+});
+
+app.delete('/blogs/:id', async (req, res) => {
+  try {
+    await Blog.findByIdAndDelete(req.params.id);
+    res.redirect('/blogs'); // Redirecting to the list of blogs
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while deleting the blog');
+  }
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -93,25 +125,6 @@ const isLoggedIn = (req, res, next) => {
     res.redirect('/login');
   }
 };
-
-// app.get('/', (req, res) => {
-//   res.send('<h1>Welcome to the Blog</h1>');
-// });
-
-// app.get('/admin', isLoggedIn, (req, res) => {
-//   res.send('<h1>Admin Page</h1><a href="/logout">Logout</a>');
-// });
-
-// app.get('/login', (req, res) => {
-//   // res.send(`
-//   //   <h1>Login</h1>
-//   //   <form method="post" action="/login">
-//   //     <input type="text" name="username" placeholder="Username" required><br>
-//   //     <input type="password" name="password" placeholder="Password" required><br>
-//   //     <button type="submit">Login</button>
-//   //   </form>
-//   // `);
-// });
 
 app.get('/login', (req, res) => {
   const loginPath = path.join(__dirname, '..', 'dist', 'login.html');

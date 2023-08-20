@@ -89,6 +89,14 @@ function renderBlogs(blogs) {
         <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
           <p class="text-sm leading-6 text-gray-900">${blog.tags.join(', ')}</p>
           <p class="mt-1 text-xs leading-5 text-gray-500">${blog.body.substring(0, 100)}...</p>
+          <a href="/blogs/edit/:id" class="btn btn-primary">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Edit
+          </button>
+          </a>
+          <button onclick="deleteBlog(:id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Delete
+            </button>
         </div>
       </li>`;
 
@@ -97,6 +105,22 @@ function renderBlogs(blogs) {
 }
 
 fetchBlogs();
+
+function deleteBlog(blogId) {
+  fetch(`/blogs/${blogId}`, {
+    method: 'DELETE',
+  })
+    .then((response) => {
+      if (response.ok) {
+        window.location.href = '/blogs'; // Redirect to the list of blogs
+      } else {
+        alert('An error occurred while deleting the blog');
+      }
+    })
+    .catch((error) => {
+      console.error('There was an error deleting the blog:', error);
+    });
+}
 
 </script>
 </body>

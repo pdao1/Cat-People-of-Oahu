@@ -1,6 +1,8 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -165,4 +167,7 @@ a.adoptable-cat {
   color: #ff6547;
   text-decoration: inherit;
   
+}
+main, #adoptable-cats  {
+  background-color: #efeded;
 }

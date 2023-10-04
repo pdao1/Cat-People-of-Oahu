@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -17,8 +16,7 @@
 
 </head>
 
-  <body class="h-full">
-  
+<body class="h-full">
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Add New Blog Entry</h2>
@@ -26,31 +24,31 @@
 
   <form action="/submit" method="post" class="p-8 space-y-4">
     <div>
-      <label for="title" class="block text-sm font-medium text-gray-600">Title</label>
-      <input type="text" id="title" name="title" class="mt-1 p-2 w-full border rounded-md" required>
+      <label for="title" class="block text-sm font-medium text-black">Title</label>
+      <input type="text" id="title" name="title" class="bg-white bg-white mt-1 p-2 w-full border rounded-md" required>
     </div>
     <div>
-      <label for="date" class="block text-sm font-medium text-gray-600">Date</label>
-      <input type="date" id="date" name="date" class="mt-1 p-2 w-full border rounded-md" required>
+      <label for="date" class="block text-sm font-medium text-black">Date</label>
+      <input type="date" id="date" name="date" class="bg-white mt-1 p-2 w-full border rounded-md" required>
     </div>
     <div>
-      <label for="category" class="block text-sm font-medium text-gray-600">Category</label>
-      <input type="text" id="category" name="category" class="mt-1 p-2 w-full border rounded-md" required>
+      <label for="category" class="block text-sm font-medium text-black">Category</label>
+      <input type="text" id="category" name="category" class="bg-white mt-1 p-2 w-full border rounded-md" required>
     </div>
     <div>
-      <label for="body" class="block text-sm font-medium text-gray-600">Body</label>
-      <textarea id="body" name="body" rows="4" class="mt-1 p-2 w-full border rounded-md" required></textarea>
+      <label for="body" class="block text-sm font-medium text-black">Body</label>
+      <textarea id="body" name="body" rows="4" class="bg-white mt-1 p-2 w-full border rounded-md" required></textarea>
     </div>
     <div>
-      <label for="tags" class="block text-sm font-medium text-gray-600">Tags (comma-separated)</label>
-      <input type="text" id="tags" name="tags" class="mt-1 p-2 w-full border rounded-md">
+      <label for="tags" class="block text-sm font-medium text-black">Tags (comma-separated)</label>
+      <input type="text" id="tags" name="tags" class="bg-white mt-1 p-2 w-full border rounded-md">
     </div>
     <div>
-      <label for="image" class="block text-sm font-medium text-gray-600">Image URL</label>
-      <input type="url" id="image" name="image" class="mt-1 p-2 w-full border rounded-md">
+      <label for="image" class="block text-sm font-medium text-black">Image URL</label>
+      <input type="url" id="image" name="image" class="bg-white mt-1 p-2 w-full border rounded-md">
     </div>
     <div>
-      <button type="submit" class="w-full p-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">Submit</button>
+      <button type="submit" class="w-full p-2 text-black btn btn-outline bg-blue-600 rounded-md hover:bg-blue-700">Submit</button>
     </div>
   </form>
   
